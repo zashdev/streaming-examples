@@ -16,7 +16,7 @@ async def connect():
         extra_headers={"x-api-key": "YOUR_API_KEY"},
     ) as ws:
         while True:
-            raw = await asyncio.wait_for(ws.recv())
+            raw = await asyncio.wait_for(ws.recv(), timeout=180)
             process(
                 pd.read_parquet(io.BytesIO(base64.b64decode(raw))).to_dict(
                     orient="records"
